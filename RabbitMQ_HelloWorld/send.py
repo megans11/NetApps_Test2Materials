@@ -1,11 +1,14 @@
 import pika
+import json
 
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 
-channel.queue_declare(queue='hello')
+my_list = [1, 2, 3, 4 ,5]
+
+channel.queue_declare(queue='Adder')
 channel.basic_publish(exchange='',
-						routing_key='hello',
-						body='Hello World!')
-print(" [x] Send 'Hello World!'")
+						routing_key='Adder',
+						body=json.dumps(my_list))
+print(" [x] Send list body")
 connection.close()
